@@ -16,10 +16,9 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.org.civilianhelper.R;
-import com.org.civilianhelper.utils.SPUtils;
-import com.org.civilianhelper.utils.ShowTomast;
-import com.org.civilianhelper.widget.SystemBarTintManager;
+import com.base.resultset.R;
+import com.base.resultset.utils.SPUtils;
+import com.base.resultset.widget.SystemBarTintManager;
 
 import java.lang.reflect.Method;
 
@@ -35,7 +34,6 @@ public abstract class BaseActivity extends FragmentActivity implements
     // 用于解决TabActvivty有虚拟键盘的安卓手机 顶部显示横条问题在setContentView前设置成true
     protected boolean isShowStatusBar = false;
     protected boolean isLucency;//设置状态栏是否透明并屏幕置顶
-    protected ShowTomast showTomast;
 
     @SuppressLint("NewApi")
     @Override
@@ -51,7 +49,6 @@ public abstract class BaseActivity extends FragmentActivity implements
             statusBarColour = getResources().getColor(R.color.status_bar_colour_lucency);
         }
         setStatusBarColour(statusBarColour);
-        showTomast = new ShowTomast(this);
     }
 
     /**
