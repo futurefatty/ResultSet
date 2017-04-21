@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.base.resultset.R;
 import com.base.resultset.base.BaseActivity;
+import com.base.resultset.ui.imageview.ImageActivity;
 import com.base.resultset.ui.textview.TextActivity;
 
 public class MainActivity extends BaseActivity {
@@ -21,12 +22,17 @@ public class MainActivity extends BaseActivity {
             Button butt = (Button) findViewById(butId[i]);
             butt.setOnClickListener(this);
         }
+        setTitleBarVisible(false);
     }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button1:
                 intent = new Intent(this, TextActivity.class);
+                break;
+            case R.id.button2:
+                intent = new Intent(this, ImageActivity.class);
                 break;
         }
         startActivity(intent);
