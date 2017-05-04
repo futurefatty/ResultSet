@@ -35,6 +35,9 @@ public class MainActivity extends BaseActivity {
             case R.id.button2:
                 Common.ActivitySkip(this, ImageActivity.class);
                 break;
+            case R.id.button:
+                Common.ActivitySkip(this, ImageActivity.class);
+                break;
         }
 
     }
