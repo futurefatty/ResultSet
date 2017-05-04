@@ -9,9 +9,10 @@ import com.base.resultset.R;
 import com.base.resultset.base.BaseActivity;
 import com.base.resultset.ui.imageview.ImageActivity;
 import com.base.resultset.ui.textview.TextActivity;
+import com.base.resultset.utils.Common;
 
 public class MainActivity extends BaseActivity {
-    private int[] butId = {R.id.button1, R.id.button2};
+    private int[] butId = {R.id.button1, R.id.button2, R.id.button};
     private Intent intent;
 
     @Override
@@ -29,12 +30,14 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button1:
-                intent = new Intent(this, TextActivity.class);
+                Common.ActivitySkip(this, TextActivity.class);
                 break;
             case R.id.button2:
-                intent = new Intent(this, ImageActivity.class);
+                Common.ActivitySkip(this, ImageActivity.class);
                 break;
         }
-        startActivity(intent);
+
     }
+
+
 }
