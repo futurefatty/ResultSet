@@ -298,6 +298,7 @@
 
     <!-- 状态栏颜色 -->
     <color name="status_bar_colour">#3399FF</color>
+    <!--透明色-->
     <color name="status_bar_colour_lucency">#00000000</color>
     <!-- 标题栏颜色 -->
     <color name="title_bar_colour">#2267CE</color>

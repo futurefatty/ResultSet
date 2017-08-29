@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.base.resultset.R;
 import com.base.resultset.base.BaseActivity;
+import com.base.resultset.ui.baidu.MapHomePageActivity;
 import com.base.resultset.ui.imageview.ImageActivity;
 import com.base.resultset.ui.textview.TextActivity;
 import com.base.resultset.utils.Common;
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        isLucency=true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         for (int i = 0; i < butId.length; i++) {
@@ -36,7 +38,7 @@ public class MainActivity extends BaseActivity {
                 Common.ActivitySkip(this, ImageActivity.class);
                 break;
             case R.id.button:
-                Common.ActivitySkip(this, ImageActivity.class);
+                Common.ActivitySkip(this, MapHomePageActivity.class);
                 break;
         }
 
