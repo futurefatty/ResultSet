@@ -1,4 +1,4 @@
-package com.base.resultset.ui.textview.widget;
+package com.base.resultset.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
