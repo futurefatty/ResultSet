@@ -50,6 +50,23 @@
                     android:layout_height="wrap_content"
                     android:text="热力地图" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/map_home_page_location_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="切回原位" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="热力地图" />
+            </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>
 
