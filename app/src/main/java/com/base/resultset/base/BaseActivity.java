@@ -34,6 +34,7 @@ public abstract class BaseActivity extends FragmentActivity implements
     // 用于解决TabActvivty有虚拟键盘的安卓手机 顶部显示横条问题在setContentView前设置成true
     protected boolean isShowStatusBar = false;
     protected boolean isLucency;//设置状态栏是否透明  默认否
+    protected boolean isBlack;//设置状态栏是否黑色  默认否
     protected boolean isStick;//设置是否状态栏置顶  默认否
 
     @SuppressLint("NewApi")
@@ -46,6 +47,9 @@ public abstract class BaseActivity extends FragmentActivity implements
         headViewColour = getColor(R.color.title_bar_colour);
         if (isLucency) {
             statusBarColour = getColor(R.color.status_bar_colour_lucency);
+        }
+        if (isBlack) {
+            statusBarColour = getColor(R.color.black);
         }
         setStatusBarColour(statusBarColour);
     }
