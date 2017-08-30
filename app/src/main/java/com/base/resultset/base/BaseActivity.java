@@ -33,20 +33,19 @@ public abstract class BaseActivity extends FragmentActivity implements
     protected int headViewColour;// 标题栏颜色
     // 用于解决TabActvivty有虚拟键盘的安卓手机 顶部显示横条问题在setContentView前设置成true
     protected boolean isShowStatusBar = false;
-    protected boolean isLucency;//设置状态栏是否透明并屏幕置顶
+    protected boolean isLucency;//设置状态栏是否透明  默认否
+    protected boolean isStick;//设置是否状态栏置顶  默认否
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-
         mInflater = LayoutInflater.from(this);
         spUtils = new SPUtils(this, "base");
-        statusBarColour = getResources().getColor(R.color.status_bar_colour);
-        headViewColour = getResources().getColor(R.color.title_bar_colour);
+        statusBarColour = getColor(R.color.status_bar_colour);
+        headViewColour = getColor(R.color.title_bar_colour);
         if (isLucency) {
-            statusBarColour = getResources().getColor(R.color.status_bar_colour_lucency);
+            statusBarColour = getColor(R.color.status_bar_colour_lucency);
         }
         setStatusBarColour(statusBarColour);
     }
@@ -80,8 +79,7 @@ public abstract class BaseActivity extends FragmentActivity implements
         if (view != null) {
             rootView = (ViewGroup) mInflater.inflate(R.layout.base_activity,
                     null);
-
-            if (isLucency) {
+            if (isStick) {
                 rootView.setFitsSystemWindows(false);
             }
             headView = (ViewGroup) rootView.findViewById(R.id.base_titlebar);
