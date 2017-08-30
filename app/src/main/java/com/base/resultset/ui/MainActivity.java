@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        isStick = true;
+        isBlack = true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         for (int i = 0; i < butId.length; i++) {
