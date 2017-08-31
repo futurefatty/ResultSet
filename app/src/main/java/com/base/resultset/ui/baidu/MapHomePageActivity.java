@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.LogoPosition;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -22,9 +23,9 @@ import com.base.resultset.R;
 import com.base.resultset.base.BaseActivity;
 
 /**
- * Created by Administrator on 2017\8\29 0029.
+ * @author liutao
+ *         created at 2017\8\29 0031 20:51
  */
-
 public class MapHomePageActivity extends BaseActivity {
     //地图相关的
     private MapView mMapView;//百度地图控件
@@ -33,13 +34,18 @@ public class MapHomePageActivity extends BaseActivity {
     //定位相关的
     private LocationClient mLocationClient = null;
     private BDAbstractLocationListener myListener;
-    private LatLng point;
+    private LatLng point;//定位经纬度
+    private BitmapDescriptor mLocationIcon;//定位图标
+    private LocationMode mLocationMode;//图标模式
+    private MyOrientationListener myOrientationListener;
+    private float mCurrentX = 0;//方向角度 默认0垂直
     //控件
     private Button generalMap_tv;
     private Button satellitelMap_tv;//
     private Button trafficMap_tv;//
     private Button heatMap_tv;//
     private Button location_tv;//
+    private Button direction_tv;//map_home_page_direction_tv
     //其他
     private boolean isTrafficMap = false;//是否已开启交通地图 默认felse
     private boolean isHeatMap = false;//是否已开启热力地图 默认felse
@@ -64,11 +70,13 @@ public class MapHomePageActivity extends BaseActivity {
         trafficMap_tv = (Button) this.findViewById(R.id.map_home_page_trafficMap_tv);
         heatMap_tv = (Button) this.findViewById(R.id.map_home_page_heatMap_tv);
         location_tv = (Button) this.findViewById(R.id.map_home_page_location_tv);
+        direction_tv = (Button) this.findViewById(R.id.map_home_page_direction_tv);
         generalMap_tv.setOnClickListener(this);
         satellitelMap_tv.setOnClickListener(this);
         trafficMap_tv.setOnClickListener(this);
         heatMap_tv.setOnClickListener(this);
         location_tv.setOnClickListener(this);
+        direction_tv.setOnClickListener(this);
     }
 
     //设置地图信息
@@ -107,8 +115,11 @@ public class MapHomePageActivity extends BaseActivity {
                 isHeatMap = !isHeatMap;
                 mBaiduMap.setBaiduHeatMapEnabled(isHeatMap);
                 break;
-            case R.id.map_home_page_location_tv://切回原位
+            case R.id.map_home_page_location_tv://我的位置
                 switchTo();
+                break;
+            case R.id.map_home_page_direction_tv://跟随方向
+                myOrientationListener.start();//开启传感器
                 break;
             default:
                 break;
@@ -117,13 +128,25 @@ public class MapHomePageActivity extends BaseActivity {
     }
 
 
-    //设置定位
+    //初始化定位设置
     private void initLocation() {
+        mLocationMode = LocationMode.NORMAL;
         myListener = new MyLocationListener();
         // 开启定位图层
         if (!mBaiduMap.isMyLocationEnabled()) {
             mBaiduMap.setMyLocationEnabled(true);
         }
+        //获取到方向传感器监听
+        myOrientationListener = new MyOrientationListener(this);
+        myOrientationListener.setmOnOrientationListener(new MyOrientationListener.OnOrientationListener() {
+            @Override
+            public void onOrientationChanged(float x) {
+                mCurrentX = x;//改变方向值
+                System.out.println("--------------------------------" + mCurrentX);
+            }
+        });
+        //初始化定位图标
+        mLocationIcon = BitmapDescriptorFactory.fromResource(R.mipmap.arrow);
         //声明LocationClient类
         mLocationClient = new LocationClient(getApplicationContext());
         //注册监听函数
@@ -159,6 +182,7 @@ public class MapHomePageActivity extends BaseActivity {
         mLocationClient.start();//开启定位
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -186,6 +210,10 @@ public class MapHomePageActivity extends BaseActivity {
         //关闭定位图层
         if (mBaiduMap.isMyLocationEnabled()) {
             mBaiduMap.setMyLocationEnabled(false);
+        }
+        //关闭方向监听
+        if (myOrientationListener != null) {
+            myOrientationListener.stop();
         }
     }
 
@@ -270,10 +298,13 @@ public class MapHomePageActivity extends BaseActivity {
         MyLocationData locData = new MyLocationData.Builder()
                 .accuracy(bdLocation.getRadius())
                 // 此处设置开发者获取到的方向信息，顺时针0-360
-                .direction(100).latitude(bdLocation.getLatitude())
+                .direction(mCurrentX).latitude(bdLocation.getLatitude())
                 .longitude(bdLocation.getLongitude()).build();
         // 设置定位数据
         mBaiduMap.setMyLocationData(locData);
+        //赋值定位图标
+        MyLocationConfiguration config = new MyLocationConfiguration(mLocationMode, true, mLocationIcon);
+        mBaiduMap.setMyLocationConfiguration(config);
     }
 
     //切换到当前位置
