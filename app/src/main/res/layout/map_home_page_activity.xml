@@ -60,12 +60,13 @@
                     android:id="@+id/map_home_page_location_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="切回原位" />
+                    android:text="我的位置" />
 
                 <Button
+                    android:id="@+id/map_home_page_direction_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="热力地图" />
+                    android:text="方向跟随" />
             </LinearLayout>
         </LinearLayout>
     </HorizontalScrollView>
