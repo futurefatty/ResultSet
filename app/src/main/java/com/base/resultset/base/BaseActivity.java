@@ -43,13 +43,13 @@ public abstract class BaseActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         mInflater = LayoutInflater.from(this);
         spUtils = new SPUtils(this, "base");
-        statusBarColour = getColor(R.color.status_bar_colour);
-        headViewColour = getColor(R.color.title_bar_colour);
+        statusBarColour = getResources().getColor(R.color.status_bar_colour);
+        headViewColour = getResources().getColor(R.color.title_bar_colour);
         if (isLucency) {
-            statusBarColour = getColor(R.color.status_bar_colour_lucency);
+            statusBarColour = getResources().getColor(R.color.status_bar_colour_lucency);
         }
         if (isBlack) {
-            statusBarColour = getColor(R.color.black);
+            statusBarColour = getResources().getColor(R.color.black);
         }
         setStatusBarColour(statusBarColour);
     }
@@ -121,10 +121,9 @@ public abstract class BaseActivity extends FragmentActivity implements
                 SystemBarTintManager tintManager = new SystemBarTintManager(
                         this);
                 tintManager.setStatusBarTintEnabled(true);
-                tintManager.setStatusBarTintColor(getResources().getColor(
-                        colour));
+                tintManager.setStatusBarTintColor(colour);
                 tintManager.setNavigationBarTintEnabled(true);
-                tintManager.setTintColor(getResources().getColor(colour));
+                tintManager.setTintColor(colour);
 
                 // 4.4以上并且没有虚拟键盘
             } else if (!(checkDeviceHasNavigationBar(this))
@@ -136,10 +135,9 @@ public abstract class BaseActivity extends FragmentActivity implements
                         this);
 
                 tintManager.setStatusBarTintEnabled(true);
-                tintManager.setStatusBarTintColor(getResources().getColor(
-                        colour));
+                tintManager.setStatusBarTintColor(colour);
                 tintManager.setNavigationBarTintEnabled(true);
-                tintManager.setTintColor(getResources().getColor(colour));
+                tintManager.setTintColor(colour);
 
             }
             // 安卓版本大于等于5.0
